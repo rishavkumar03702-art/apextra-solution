@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { supabase } from '../supabase'
 
 const services = [
   { icon: '🤖', name: 'Artificial Intelligence', skills: 'Generative AI, AI Agents, AI Automation' },
@@ -46,7 +47,8 @@ state: '',
     service: '',
     type: '',
     budget: '',
-    details: ''
+    details: '',
+    comment: ''
   })
 
   const openForm = () => setShowForm(true)
@@ -57,26 +59,52 @@ state: '',
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+  e.preventDefault()
 
-    alert('Thank you! Your requirement form has been submitted successfully. Backend integration will be added next.')
+  const { error } = await supabase
+    .from('client_requests')
+    .insert([
+      {
+        full_name: form.name,
+        email: form.email,
+        phone: form.phone,
+        country: form.country,
+        state: form.state,
+        company: form.company,
+        service: form.service,
+        requirement_type: form.type,
+        budget: form.budget,
+        details: form.details,
+       comment: form.comment,
+        status: 'New'
+      }
+    ])
 
-    setForm({
-      name: '',
-      email: '',
-      phone: '',
-       country: '',
-state: '',
-      company: '',
-      service: '',
-      type: '',
-      budget: '',
-      details: ''
-    })
-
-    closeForm()
+  if (error) {
+    console.error('Submission Error:', error)
+    alert('Request submit nahi hui. Please try again.')
+    return
   }
+
+  alert('Thank you! Your request has been submitted successfully.')
+
+  setForm({
+    name: '',
+    email: '',
+    phone: '',
+    country: '',
+    state: '',
+    company: '',
+    service: '',
+    type: '',
+    budget: '',
+    details: '',
+    comment: ''
+  })
+
+  closeForm()
+}
 
   return (
     <div className="website">
