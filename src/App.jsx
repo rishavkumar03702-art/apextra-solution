@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { supabase } from '../supabase'
+import { supabase } from "./supabase";
 
 const services = [
   { icon: '🤖', name: 'Artificial Intelligence', skills: 'Generative AI, AI Agents, AI Automation' },
