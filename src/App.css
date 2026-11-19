@@ -1525,3 +1525,215 @@ footer p {
     padding: 30px 20px;
   }
 }
+/* featured menu item (Resume Match) */
+.mega-menu-grid a.featured {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0b4f85, #1d78c1);
+  color: #fff;
+}
+
+.mega-menu-grid a.featured::after {
+  content: "FREE TOOL";
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #ffc83d;
+  color: #0a1d44;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.mega-menu-grid a.featured:hover {
+  background: #093f6b;
+  color: #fff;
+}
+/* AI Career Assistant - Featured Menu */
+.mega-menu-link.ai-featured {
+  background: linear-gradient(110deg, #6528d9, #087fbd) !important;
+  color: #ffffff !important;
+  border: 1px solid #8b5cf6;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.35);
+  transition: all 0.3s ease;
+}
+
+.mega-menu-link.ai-featured:hover {
+  background: linear-gradient(110deg, #7c3aed, #06b6d4) !important;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.55);
+  transform: translateY(-2px);
+}
+/* AI Career Assistant Premium Design */
+.mega-menu-link.ai-featured {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  min-height: 58px;
+  padding: 12px 18px !important;
+  background: linear-gradient(110deg, #7800f5, #075ee8, #00c8e8) !important;
+  color: #ffffff !important;
+  border: 2px solid #a855f7 !important;
+  border-radius: 13px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  box-shadow:
+    0 0 8px #a855f7,
+    0 0 18px rgba(0, 210, 255, 0.45) !important;
+  transition: all 0.3s ease;
+}
+
+.ai-menu-icon {
+  font-size: 25px;
+  padding-right: 13px;
+  border-right: 2px solid rgba(255,255,255,0.8);
+  line-height: 30px;
+}
+
+.ai-menu-sparkle {
+  color: #ffe600;
+  font-size: 25px;
+  margin-left: auto;
+}
+
+.mega-menu-link.ai-featured:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 12px #a855f7,
+    0 0 25px #00d9ff !important;
+}
+/* ---------- ACCOUNT DROPDOWN (APEXTRA) ---------- */
+.account-menu {
+  position: relative;
+}
+
+.account-trigger {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 16px 0 8px;
+  background: #fff;
+  border: 1px solid #dfe6ef;
+  border-radius: 40px;
+  color: #0b2a4a;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.account-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.account-trigger::marker {
+  content: "";
+}
+
+.account-trigger:hover,
+.account-menu[open] .account-trigger {
+  border-color: #0b4f85;
+  box-shadow: 0 4px 14px rgba(11, 79, 133, 0.15);
+}
+
+.account-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #0b4f85;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.account-arrow {
+  color: #0b2a4a;
+  transition: transform 0.25s ease;
+}
+
+.account-menu[open] .account-arrow {
+  transform: rotate(180deg);
+}
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 280px;
+  background: #fff;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(10, 29, 68, 0.18);
+  overflow: hidden;
+  z-index: 1500;
+}
+
+.account-info {
+  padding: 14px 18px;
+  background: #f4f8fd;
+  border-bottom: 1px solid #e3e8ef;
+}
+
+.account-info small {
+  display: block;
+  color: #6b7686;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.account-info span {
+  display: block;
+  color: #0a1d44;
+  font-size: 14px;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.account-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  background: #fff;
+  color: #172033;
+  font-size: 16px;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+
+.account-dropdown button:hover {
+  background: #eef5fc;
+  color: #0b4f85;
+  padding-left: 24px;
+}
+
+.account-dropdown .account-logout {
+  border-top: 1px solid #e3e8ef;
+  color: #e53935;
+  font-weight: 600;
+}
+
+.account-dropdown .account-logout:hover {
+  background: #fdecea;
+  color: #c62828;
+}
+
+@media (max-width: 600px) {
+  .account-trigger > span:nth-child(2) {
+    display: none;
+  }
+  .account-dropdown {
+    width: 250px;
+  }
+}

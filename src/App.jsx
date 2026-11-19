@@ -1,5 +1,8 @@
+import AIRA from './AIRA'
 import { useState, useEffect } from 'react'
 import './App.css'
+import ResumeMatch from './ResumeMatch'
+import AICareerAssistant from './AICareerAssistant'
 import { supabase } from './supabase'
 import {
   Home,
@@ -65,9 +68,10 @@ const searchItems = [
   { title: 'Our Vision', category: 'Company', link: '#about' },
   { title: 'Our Team', category: 'Company', link: '#about' },
 
+  { title: 'Resume Match', category: 'Careers', link: '#resume-match' },
   { title: 'Current Openings', category: 'Careers', link: '#careers' },
   { title: 'Internship Programs', category: 'Careers', link: '#careers' },
-  { title: 'Submit Your Resume', category: 'Careers', link: '#careers' }
+  { title: 'ATS Resume Analyzer', category: 'Careers', link: '#ats-analyzer' }
 ]
 
 const navMenus = [
@@ -138,11 +142,13 @@ const navMenus = [
     title: 'Build Your Career With Us',
     sub: 'Opportunities • Growth • Success',
     links: [
+      ['#resume-match', 'Resume Match', 'featured'],
       ['#careers', 'Current Openings'],
       ['#careers', 'Apply for Jobs'],
       ['#careers', 'Internship Programs'],
       ['#careers', 'Remote Opportunities'],
-      ['#careers', 'Submit Your Resume'],
+      ['#ats-analyzer', 'ATS Resume Analyzer'],
+      ['#ai-career-assistant', 'AI Career Assistant', 'ai-featured'],
       ['#careers', 'Career Support']
     ]
   }
@@ -180,6 +186,20 @@ const emptyForm = {
 }
 
 function App() {
+  const heroSlides = [
+    '/rishav.jpg',
+    '/2.png',
+    '/Apextra_1.png'
+  ]
+const [currentSlide, setCurrentSlide] = useState(0)
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+  }, 3000)
+
+  return () => clearInterval(timer)
+}, [])
   const [showForm, setShowForm] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -195,6 +215,29 @@ function App() {
   const [authLoading, setAuthLoading] = useState(false)
   const [user, setUser] = useState(null)
 
+  // ---------- SIMPLE HASH ROUTING (#resume-match = Resume Match page) ----------
+  const [route, setRoute] = useState(window.location.hash)
+
+  useEffect(() => {
+    const onHashChange = () => setRoute(window.location.hash)
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  const isResumePage = route === '#resume-match' || route === '#ats-analyzer'
+  const isAICareerPage = route === '#ai-career-assistant'
+
+  useEffect(() => {
+    if (route === '#resume-match' || route === '#ats-analyzer') {
+      window.scrollTo(0, 0)
+      return
+    }
+    if (route) {
+      const el = document.getElementById(route.slice(1))
+      if (el) el.scrollIntoView()
+    }
+  }, [route])
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null)
@@ -207,10 +250,32 @@ function App() {
     return () => listener.subscription.unsubscribe()
   }, [])
 
+  // Account dropdown: bahar click karne par band ho jaye
+  useEffect(() => {
+    const closeMenu = (e) => {
+      document.querySelectorAll('.account-menu[open]').forEach((m) => {
+        if (!m.contains(e.target)) m.removeAttribute('open')
+      })
+    }
+    document.addEventListener('click', closeMenu)
+    return () => document.removeEventListener('click', closeMenu)
+  }, [])
+
   const displayName =
     user?.user_metadata?.full_name?.split(' ')[0] ||
     user?.email?.split('@')[0] ||
     ''
+
+  // Pura naam + initials (RK jaisa) account dropdown ke liye
+  const accountFullName =
+    user?.user_metadata?.full_name || user?.email?.split('@')[0] || ''
+
+  const initials = accountFullName
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('')
 
   const openAuth = (tab = 'signin') => {
     setAuthTab(tab)
@@ -400,8 +465,16 @@ function App() {
                 </div>
 
                 <div className="mega-menu-grid">
-                  {menu.links.map(([href, text], i) => (
-                    <a href={href} key={i}>{text}</a>
+                  {menu.links.map(([href, text, flag], i) => (
+                    <a href={href} key={i} className={`mega-menu-link ${flag || ''}`}>
+                      {flag === 'ai-featured' ? (
+                        <>
+                          <span className="ai-menu-icon">🤖</span>
+                          <span>{text}</span>
+                          <span className="ai-menu-sparkle">✦</span>
+                        </>
+                      ) : text}
+                    </a>
                   ))}
                 </div>
               </div>
@@ -468,30 +541,59 @@ function App() {
         )}
 
         <div className="nav-auth">
-          {user && <span className="nav-user">Hi, {displayName}</span>}
+          {user ? (
+            <details className="account-menu">
+              <summary className="account-trigger">
+                <span className="account-avatar">{initials || 'U'}</span>
+                <span>{accountFullName}</span>
+                <ChevronDown size={16} strokeWidth={2} className="account-arrow" />
+              </summary>
 
-          <button
-            className="sign-in-btn"
-            type="button"
-            onClick={() => (user ? handleSignOut() : openAuth('signin'))}
-          >
-            <span className="sign-in-text">{user ? 'SIGN OUT' : 'SIGN IN'}</span>
-            <span className="sign-in-icon">
-              <svg
-                viewBox="0 0 24 24"
-                width="21"
-                height="21"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <circle cx="12" cy="8" r="3.5" />
-                <path d="M5 21c0-4 3-6 7-6s7 2 7 6" />
-              </svg>
-            </span>
-          </button>
+              <div className="account-dropdown">
+                <div className="account-info">
+                  <small>Signed in as</small>
+                  <span>{user.email}</span>
+                </div>
+
+                <button type="button">My Services</button>
+                <button type="button">My Applications</button>
+                <button type="button">Certificates</button>
+                <button type="button">My Profile</button>
+                <button type="button">Payments</button>
+                <button type="button">Change Password</button>
+
+                <button
+                  type="button"
+                  className="account-logout"
+                  onClick={handleSignOut}
+                >
+                  Log out
+                </button>
+              </div>
+            </details>
+          ) : (
+            <button
+              className="sign-in-btn"
+              type="button"
+              onClick={() => openAuth('signin')}
+            >
+              SIGN IN
+            </button>
+          )}
         </div>
       </header>
+
+      {isResumePage ? (
+        <ResumeMatch
+          onGetHelp={() => {}}
+          user={user}
+          onRequireLogin={() => openAuth('signin')}
+          mode={route === '#ats-analyzer' ? 'ats' : 'match'}
+        />
+      ) : isAICareerPage ? (
+        <AICareerAssistant user={user} />
+      ) : (
+        <>
 
       {/* HERO */}
       <section className="hero" id="home">
@@ -527,7 +629,16 @@ function App() {
           </div>
         </div>
 
-        <div className="hero-card">
+        <div
+  className="hero-card"
+  style={{
+    backgroundImage:
+      `linear-gradient(rgba(5, 25, 55, 0.55), rgba(5, 25, 55, 0.75)), url('${heroSlides[currentSlide]}')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center 25%',
+    backgroundRepeat: 'no-repeat'
+  }}
+>
           <div className="card-logo">
             <img src="/Apextra_1.png" alt="Apextra Icon" />
           </div>
@@ -795,6 +906,9 @@ function App() {
           Email: contact@apextrasolution.com
         </p>
       </section>
+
+      </>
+      )}
 
       {/* FOOTER */}
       <footer>
@@ -1171,6 +1285,7 @@ function App() {
           </div>
         </div>
       )}
+      <AIRA />
 
     </div>
   )

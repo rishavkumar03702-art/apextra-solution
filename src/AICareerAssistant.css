@@ -1,0 +1,108 @@
+/* APEXTRA AI CAREER ASSISTANT */
+
+.ai-career-page {
+  min-height: 75vh;
+  padding: 65px 6%;
+  background: linear-gradient(135deg, #f4f8ff, #ffffff);
+  color: #102f55;
+  font-family: inherit;
+}
+
+.ai-career-page h1 {
+  text-align: center;
+  font-size: 38px;
+  font-weight: 800;
+  color: #102f55;
+  margin-bottom: 15px;
+}
+
+.ai-career-page > p {
+  text-align: center;
+  font-size: 17px;
+  color: #64748b;
+  margin-bottom: 45px;
+}
+
+.ai-career-services {
+  max-width: 1150px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.ai-career-card {
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  border: 1px solid #e0e8f3;
+  box-shadow: 0 8px 25px rgba(16, 47, 85, 0.07);
+  transition: all 0.3s ease;
+}
+
+.ai-career-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 35px rgba(16, 47, 85, 0.13);
+  border-color: #f5a623;
+}
+
+.ai-career-card h2 {
+  font-size: 21px;
+  color: #103d70;
+  margin-bottom: 14px;
+}
+
+.ai-career-card p {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 50px;
+}
+
+.ai-career-card button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #104f85;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ai-career-card button:hover {
+  background: #f5a623;
+  color: #102f55;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .ai-career-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .ai-career-page {
+    padding: 40px 18px;
+  }
+
+  .ai-career-page h1 {
+    font-size: 28px;
+  }
+
+  .ai-career-services {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .ai-career-card {
+    padding: 25px 20px;
+  }
+}

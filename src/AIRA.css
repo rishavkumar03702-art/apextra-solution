@@ -1,0 +1,115 @@
+.aira-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+}
+
+.aira-float {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 2px solid white;
+  border-radius: 40px;
+  background: linear-gradient(110deg, #7200ff, #0066ff, #00d9e8);
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 12px #8b00ff, 0 0 22px #00d9e8;
+}
+
+.aira-name {
+  font-weight: bold;
+}
+
+.aira-window {
+  width: 350px;
+  height: 440px;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 35px rgba(0,0,0,0.22);
+  margin-bottom: 14px;
+}
+
+.aira-header {
+  background: linear-gradient(110deg, #172b70, #007bdb);
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aira-header small {
+  display: block;
+  margin-top: 5px;
+}
+
+.aira-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.aira-messages {
+  padding: 16px;
+  height: 290px;
+  overflow-y: auto;
+  background: #f5f8ff;
+}
+
+.aira-message {
+  padding: 10px 13px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  max-width: 85%;
+  line-height: 1.5;
+}
+
+.aira-message.aira {
+  background: #e4edfc;
+}
+
+.aira-message.user {
+  background: #0875d1;
+  color: white;
+  margin-left: auto;
+}
+
+.aira-footer {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.aira-footer small {
+  color: #555;
+}
+
+.aira-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.aira-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.aira-input button {
+  background: #0875d1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
