@@ -186,21 +186,27 @@ const emptyForm = {
 }
 
 function App() {
-  const heroSlides = [
-    '/rishav.jpg',
-    '/2.png',
-    '/Apextra_1.png'
-  ]
+const heroSlides = [
+  '/6.jpg',
+  '/9.jpg',
+  '/5.jpg',
+  '/10.jpg',
+  '/11.jpg',
+  '/Apextra.png'
+]
 const [currentSlide, setCurrentSlide] = useState(0)
 
 useEffect(() => {
   const timer = setInterval(() => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+    setCurrentSlide(current => {
+      return current === heroSlides.length - 1 ? 0 : current + 1
+    })
   }, 3000)
 
   return () => clearInterval(timer)
-}, [])
+}, [heroSlides.length])
   const [showForm, setShowForm] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [form, setForm] = useState(emptyForm)
@@ -449,6 +455,13 @@ useEffect(() => {
           />
         </a>
 
+<button
+  className="mobile-menu-toggle"
+  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+  aria-label="Toggle Menu"
+>
+  ☰
+</button>
         <nav>
           {navMenus.map((menu) => (
             <div className="nav-dropdown" key={menu.label}>
@@ -629,29 +642,28 @@ useEffect(() => {
           </div>
         </div>
 
-        <div
-  className="hero-card"
-  style={{
-    backgroundImage:
-      `linear-gradient(rgba(5, 25, 55, 0.55), rgba(5, 25, 55, 0.75)), url('${heroSlides[currentSlide]}')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center 25%',
-    backgroundRepeat: 'no-repeat'
-  }}
->
-          <div className="card-logo">
-            <img src="/Apextra_1.png" alt="Apextra Icon" />
-          </div>
+    <div className="hero-card">
 
-          <h2 className="card-title">APEXTRA SOLUTION</h2>
+  <div className="card-slide-image">
+    <img
+      src={heroSlides[currentSlide]}
+      alt="APEXTRA SOLUTION"
+    />
+  </div>
 
-          <h3>
-            One Network.<br />
-            Every Solution.
-          </h3>
+  <div className="slider-dots">
+    {heroSlides.map((slide, index) => (
+      <button
+        key={index}
+        className={currentSlide === index ? 'active' : ''}
+        onClick={() => setCurrentSlide(index)}
+        aria-label={`Go to slide ${index + 1}`}
+      />
+    ))}
+  </div>
 
-          <p>Technology • Talent • Transformation</p>
-        </div>
+</div>
+  
       </section>
 
       {/* ABOUT */}
